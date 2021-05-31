@@ -36,6 +36,7 @@ GEM
     gollum-rugged_adapter (1.0)
       mime-types (>= 1.15)
       rugged (~> 0.99)
+    io-wait (0.1.0)
     json (2.5.1)
     kramdown (2.3.0)
       rexml
@@ -47,14 +48,21 @@ GEM
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2021.0225)
-    mini_portile2 (2.5.0)
+    mini_portile2 (2.5.2)
+      net-ftp (~> 0.1)
     multi_json (1.15.0)
     mustache (0.99.8)
     mustache-sinatra (1.0.1)
       mustache (<= 0.99.8)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    nokogiri (1.11.1)
+    net-ftp (0.1.2)
+      net-protocol
+      time
+    net-protocol (0.1.1)
+      io-wait
+      timeout
+    nokogiri (1.11.6)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     octicons (12.1.0)
@@ -97,6 +105,8 @@ GEM
       therubyrhino_jar (>= 1.7.4, < 1.7.9)
     therubyrhino_jar (1.7.8)
     tilt (2.0.10)
+    time (0.1.0)
+    timeout (0.1.1)
     twitter-text (1.14.7)
       unf (~> 0.1.0)
     uglifier (4.2.0)
