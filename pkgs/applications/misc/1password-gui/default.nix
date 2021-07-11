@@ -29,14 +29,16 @@
 , pango
 , systemd
 , xdg-utils
+, libudev
+, xorg
 }:
 stdenv.mkDerivation rec {
   pname = "1password";
-  version = "8.0.34";
+  version = "8.1.2-2.BETA";
 
   src = fetchurl {
-    url = "https://downloads.1password.com/linux/tar/stable/x86_64/1password-${version}.x64.tar.gz";
-    sha256 = "0mp119v5vgsva7pnxpsbq4xhh4vbhwv7ga9b5b7f6slx3biy1wmh";
+    url = "https://downloads.1password.com/linux/tar/beta/x86_64/1password-${version}.x64.tar.gz";
+    sha256 = "10rj2qahdqq76jm09cvw7g1bzrrh5pdy446yz2p0pf5n9hha8hp6";
   };
 
   nativeBuildInputs = [ makeWrapper ];
@@ -96,7 +98,14 @@ stdenv.mkDerivation rec {
       done
 
       makeWrapper $out/share/1password/1password $out/bin/1password \
-        --prefix PATH : ${xdg-utils}/bin
+        --prefix PATH : ${xdg-utils}/bin \
+        --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ stdenv.cc.cc libudev xorg.libXtst ]}"
+
+      mv $out/share/1password/1Password-KeyringHelper $out/share/1password/1Password-KeyringHelper2
+      ln -sf /run/wrappers/bin/_1password-keyring-helper $out/share/1password/1Password-KeyringHelper
+
+      install -D -m0644 com.1password.1Password.policy \
+        $out/share/polkit-1/actions/com.1password.1Password.policy
 
       runHook postInstall
     '';
